@@ -3,38 +3,64 @@ package com.cxi.compose_study
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.cxi.compose_study.ui.main.MainPage
+import com.cxi.compose_study.ui.start.StartPage
 import com.cxi.compose_study.ui.theme.Compose_StudyTheme
+import com.cxi.compose_study.utils.MAINPAGE
+import com.cxi.compose_study.utils.STARTPAGE
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            Compose_StudyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+            mainView()
+        }
+    }
+}
+
+@Composable
+private fun  mainView(){
+    Compose_StudyTheme{
+        Surface(
+            color = MaterialTheme.colors.background,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            rememberSystemUiController().run {
+                setStatusBarColor(Color.Transparent, false)
+                setNavigationBarColor(Color.Transparent, false)
+            }
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = STARTPAGE){
+                composable(route = STARTPAGE){
+                    StartPage(navHostController = navController)
+                }
+                composable(route = MAINPAGE){
+                    MainPage(navHostController = navController )
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
+//https://jetpackcompose.cn/docs/elements/text
+//https://www.icode9.com/content-4-1063064.html
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    Compose_StudyTheme {
-        Greeting("Android")
-    }
+    mainView()
 }
+
