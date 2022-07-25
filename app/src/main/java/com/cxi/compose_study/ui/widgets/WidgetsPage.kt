@@ -1,6 +1,7 @@
 package com.cxi.compose_study.ui.widgets
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cxi.compose_study.ui.Anim.WidgetBean
+import com.cxi.compose_study.utils.PAGE
+import com.cxi.compose_study.utils.RouteUtils
 
 @Composable
 fun  WidgetsPage(){
@@ -26,7 +29,9 @@ fun  WidgetsPage(){
            Card(
                shape = RoundedCornerShape(15.dp),
                border = BorderStroke(1.dp, Color.Green),
-               modifier = Modifier.padding(top = 5.dp, bottom = 5.dp).fillMaxWidth()
+               modifier = Modifier.padding(top = 5.dp, bottom = 5.dp).fillMaxWidth().clickable { 
+                   RouteUtils.getInstance().go(PAGE.WIDGETS_TEXT)
+               }
            ) {
                Column (
                    verticalArrangement = Arrangement.SpaceEvenly,

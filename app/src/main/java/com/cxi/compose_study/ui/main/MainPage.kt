@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun MainPage(navHostController: NavHostController){
+fun MainPage(){
     val scope = rememberCoroutineScope()
     var mScaffoldState = rememberScaffoldState()
     var selectedItem by remember { mutableStateOf(0) }

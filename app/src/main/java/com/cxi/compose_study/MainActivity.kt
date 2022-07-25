@@ -16,8 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.cxi.compose_study.ui.main.MainPage
 import com.cxi.compose_study.ui.start.StartPage
 import com.cxi.compose_study.ui.theme.Compose_StudyTheme
-import com.cxi.compose_study.utils.MAINPAGE
-import com.cxi.compose_study.utils.STARTPAGE
+import com.cxi.compose_study.utils.RouteUtils
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -42,15 +41,7 @@ private fun  mainView(){
                 setStatusBarColor(Color.Transparent, false)
                 setNavigationBarColor(Color.Transparent, false)
             }
-            val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = STARTPAGE){
-                composable(route = STARTPAGE){
-                    StartPage(navHostController = navController)
-                }
-                composable(route = MAINPAGE){
-                    MainPage(navHostController = navController )
-                }
-            }
+            RouteUtils.getInstance().initRoute()
         }
     }
 }

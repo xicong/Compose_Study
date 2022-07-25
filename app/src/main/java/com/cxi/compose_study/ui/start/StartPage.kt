@@ -17,12 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.cxi.compose_study.utils.MAINPAGE
+import com.cxi.compose_study.utils.PAGE
+import com.cxi.compose_study.utils.RouteUtils
 import kotlinx.coroutines.delay
 
 @Composable
-fun StartPage(navHostController: NavHostController) {
+fun StartPage() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +32,8 @@ fun StartPage(navHostController: NavHostController) {
     ) {
         LaunchedEffect(Unit){
             delay(500)
-            navHostController.navigate(MAINPAGE)
+            RouteUtils.getInstance().back()
+            RouteUtils.getInstance().go(PAGE.MAINPAGE)
         }
         Surface(
             color = Color.Transparent,
