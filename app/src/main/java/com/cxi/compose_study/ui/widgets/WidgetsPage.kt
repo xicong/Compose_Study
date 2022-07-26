@@ -30,7 +30,10 @@ fun  WidgetsPage(){
                shape = RoundedCornerShape(15.dp),
                border = BorderStroke(1.dp, Color.Green),
                modifier = Modifier.padding(top = 5.dp, bottom = 5.dp).fillMaxWidth().clickable { 
-                   RouteUtils.getInstance().go(PAGE.WIDGETS_TEXT)
+                   when(index){
+                       0 -> RouteUtils.getInstance().go(PAGE.WIDGETS_TEXT)
+                       1 -> RouteUtils.getInstance().go(PAGE.WIDGETS_TEXTFILD_PAGE)
+                   }
                }
            ) {
                Column (

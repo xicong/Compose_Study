@@ -1,7 +1,10 @@
 package com.cxi.compose_study.utils
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -24,12 +27,12 @@ fun titleBarView(
 }
 @Composable
 fun titleBarView(
-    leftIcon:ImageVector?=null,
+    leftIcon: ImageVector?=null,
     leftIconListen:(()->Unit)?=null,
     title:String?=null
 ){
     Column {
-        statusBarView()
+        appStatusBarView()
         TopAppBar(
             navigationIcon = {
                 leftIcon?.let {
@@ -43,7 +46,7 @@ fun titleBarView(
             backgroundColor = Color.Green,
             title = {
                 title?.let {
-                    Text(title, 
+                    Text(title,
                         color = Color.White
                     )
                 }

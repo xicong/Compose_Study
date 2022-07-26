@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cxi.compose_study.ui.main.MainPage
 import com.cxi.compose_study.ui.start.StartPage
+import com.cxi.compose_study.ui.widgets.WidgetsTextFieldPage
 import com.cxi.compose_study.ui.widgets.WidgetsTextPage
 
 class RouteUtils private constructor(){
@@ -30,6 +31,9 @@ class RouteUtils private constructor(){
             }
             composable(route = PAGE.WIDGETS_TEXT.name){
                 WidgetsTextPage( )
+            }
+            composable(route = PAGE.WIDGETS_TEXTFILD_PAGE.name){
+                WidgetsTextFieldPage()
             }
         }
     }
@@ -58,4 +62,6 @@ enum class PAGE{
     MAINPAGE,
     /**TEXT*/
     WIDGETS_TEXT,
+    /**TextField*/
+    WIDGETS_TEXTFILD_PAGE,
 }

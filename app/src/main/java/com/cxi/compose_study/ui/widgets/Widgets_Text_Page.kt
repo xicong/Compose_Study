@@ -26,8 +26,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cxi.compose_study.utils.titleBarView
-import com.cxi.compose_study.utils.toast
+import com.cxi.compose_study.utils.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -40,7 +39,7 @@ fun WidgetsTextPage() {
             modifier = Modifier.fillMaxWidth()
         ) {
             stickyHeader {
-                headerView(
+                appHeadView(
                     "text = Hellow Word" +
                             "\n" + "fontSize = 12.sp" +
                             "\n" + "color = Color.Green"
@@ -57,7 +56,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     " letterSpacing = 10.dp"
                 )
             }
@@ -72,7 +71,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "buildAnnotatedString实现富文本"
                 )
             }
@@ -103,7 +102,42 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
+                    "buildAnnotatedString实现富文本并且可以点击不同文字实现不同事件"
+                )
+            }
+            item {
+                itemBorderView {
+                    val annotatedText = buildAnnotatedString {
+                        append("Click ")
+                        // We attach this *URL* annotation to the following content
+                        // until `pop()` is called
+                        pushStringAnnotation(tag = "URL",
+                            annotation = "https://developer.android.com")
+                        withStyle(style = SpanStyle(color = Color.Blue,
+                            fontWeight = FontWeight.Bold)) {
+                            append("here")
+                        }
+                        pop()
+                    }
+                    ClickableText(
+                        text = annotatedText,
+                        modifier = Modifier.padding(10.dp),
+                        onClick = { offset ->
+                            // We check if there is an *URL* annotation attached to the text
+                            // at the clicked position
+                            annotatedText.getStringAnnotations(tag = "URL", start = offset,
+                                end = offset)
+                                .firstOrNull()?.let { annotation ->
+                                    // If yes, we log its value
+                                    toast("Clicked URL"+annotation.item)
+                                }
+                        }
+                    )
+                }
+            }
+            stickyHeader {
+                appHeadView(
                     "SelectionContainer:实现文字可复制"
                 )
             }
@@ -150,7 +184,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     " lineHeight = 30.sp"
                 )
             }
@@ -166,7 +200,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "获取点击文字的位置"
                 )
             }
@@ -187,7 +221,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "Shadow阴影"
                 )
             }
@@ -211,7 +245,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     " overflow = TextOverflow.Visible"
                 )
             }
@@ -288,7 +322,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "fontFamily = FontFamily.Default"
                 )
             }
@@ -399,7 +433,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "fontStyle = FontStyle.Normal"
                 )
             }
@@ -454,7 +488,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "textDecoration = TextDecoration.None"
                 )
             }
@@ -528,7 +562,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "fontWeight = FontWeight.Normal"
                 )
             }
@@ -971,7 +1005,7 @@ fun WidgetsTextPage() {
                 }
             }
             stickyHeader {
-                headerView(
+                appHeadView(
                     "textAlign = TextAlign.Center"
                 )
             }
@@ -1162,51 +1196,16 @@ fun WidgetsTextPage() {
                 }
             }
             item {
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                )
+                appNavBarView()
             }
         }
     }
 }
 
 @Composable
-private fun headerView(str: String) {
-    Surface(
-        color = Color.Green,
-        shape = RoundedCornerShape(15.dp),
-        border = BorderStroke(1.dp, Color.Green),
-        modifier = Modifier
-            .background(Color.White)
-            .padding(10.dp)
-            .fillMaxWidth()
-            .wrapContentHeight()
-    ) {
-        Text(
-            text = str,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(10.dp),
-            fontSize = 12.sp,
-            color = Color.White,
-            textAlign = TextAlign.Start
-        )
-    }
-}
-
-@Composable
 private fun itemBorderView(content: @Composable () -> Unit) {
-    Surface(
-        color = Color.Transparent,
-        shape = RoundedCornerShape(15.dp),
-        border = BorderStroke(1.dp, Color.Green),
-        modifier = Modifier
-            .padding(start = 10.dp, end = 10.dp)
-            .fillMaxWidth()
-            .wrapContentHeight(),
+    appRoundedView (
+        bgColor = Color.Transparent,
         content = content
     )
 }

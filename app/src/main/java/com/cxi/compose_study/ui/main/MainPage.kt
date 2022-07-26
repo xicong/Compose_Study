@@ -21,12 +21,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.cxi.compose_study.R
 import com.cxi.compose_study.ui.Anim.AnimPage
 import com.cxi.compose_study.ui.Layout.LayoutPage
 import com.cxi.compose_study.ui.widgets.WidgetsPage
-import com.cxi.compose_study.utils.navBarView
+import com.cxi.compose_study.utils.appNavBarView
 import com.cxi.compose_study.utils.titleBarView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -65,7 +64,7 @@ fun MainPage(){
                         )
                     }
                 }
-                navBarView()
+                appNavBarView(Color.Green)
             }            
         },
         drawerBackgroundColor = Color.Green,
