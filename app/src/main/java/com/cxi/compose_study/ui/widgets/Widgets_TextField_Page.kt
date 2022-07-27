@@ -1,12 +1,12 @@
 package com.cxi.compose_study.ui.widgets
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,8 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cxi.compose_study.R
@@ -25,6 +28,7 @@ import com.cxi.compose_study.utils.appNavBarView
 import com.cxi.compose_study.utils.appRoundedView
 import com.cxi.compose_study.utils.titleBarView
 
+//https://juejin.cn/post/6951563170150350884
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WidgetsTextFieldPage(){
@@ -42,8 +46,9 @@ fun WidgetsTextFieldPage(){
                         modifier = Modifier.padding(10.dp)
                     ){
                         var phone = remember { mutableStateOf("18888888888") }
+                        val interactionSource = remember { MutableInteractionSource() }
                         TextField(
-                            value = phone.value, 
+                            value = phone.value,
                             textStyle = TextStyle(
                                 fontSize = 10.sp
                             ),
@@ -51,7 +56,13 @@ fun WidgetsTextFieldPage(){
                                 phone.value = it
                             },
                             modifier = Modifier
-                                .fillMaxSize()
+                                .fillMaxSize(),
+                            interactionSource = interactionSource,
+                            shape= RoundedCornerShape(20.dp),
+                            colors = TextFieldDefaults.textFieldColors(
+                                textColor = Color.White,
+                                backgroundColor = Color.Green,
+                            ),
                         )
                     }
                 }
@@ -323,7 +334,7 @@ fun WidgetsTextFieldPage(){
                 }
             }
             stickyHeader {
-                appHeadView(str = "capitalization = ")
+                appHeadView(str = "keyboardOptions = ")
             }
             item {
                 itemBorderView {
@@ -335,15 +346,571 @@ fun WidgetsTextFieldPage(){
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = "isError = true",
-                                fontSize = 15.sp,
+                                text = "capitalization= KeyboardCapitalization.None /n 不自动大小写",
+                                fontSize = 10.sp,
+                                color = Color.Green,
+                                textAlign = TextAlign.Start,
+                                lineHeight = 16.sp,
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(0.dp)
+                                    .weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.None,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "capitalization= KeyboardCapitalization.Sentences /n 当输入英文时候，将每个字母的第一个字符大写",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
                                 color = Color.Green,
                                 modifier = Modifier.weight(0.6f),
                             )
                             var phone = remember { mutableStateOf("18888888888") }
                             TextField(
                                 value = phone.value,
-                                capitalization = KeyboardCapitalization.Sentences,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Sentences,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "capitalization= KeyboardCapitalization.Words /n 当输入英文的时候，将每个字母的第一个字符小写",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Words,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "capitalization= KeyboardCapitalization.Characters /n 将所有的字符大写",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "autoCorrect=false /n 自动更正的意思",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=false,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "autoCorrect=true /n 自动更正的意思",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Text /n 是输入文本",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Text,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Ascii /n 是输入ASCII字符",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Ascii,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Number /n 输入数字",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Number,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Phone /n 输入电话",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Phone,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Uri /n 输入Uri",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Uri,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Email /n 输入Email",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Email,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.Password /n 输入Password",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.Password,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "keyboardType= KeyboardType.NumberPassword /n 输入NumberPassword",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.None",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.None,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Next",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Next,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Default",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Default,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Go",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Go,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Done",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Done,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Previous",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Previous,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Search",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Search,
+                                    autoCorrect=true,
+                                ),
+                                onValueChange = {
+                                    phone.value = it
+                                },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "imeAction = ImeAction.Send",
+                                fontSize = 10.sp,
+                                lineHeight = 16.sp,
+                                color = Color.Green,
+                                modifier = Modifier.weight(0.6f),
+                            )
+                            var phone = remember { mutableStateOf("18888888888") }
+                            TextField(
+                                value = phone.value,
+                                keyboardOptions = KeyboardOptions(
+                                    capitalization= KeyboardCapitalization.Characters,
+                                    keyboardType= KeyboardType.NumberPassword,
+                                    imeAction = ImeAction.Send,
+                                    autoCorrect=true,
+                                ),
                                 onValueChange = {
                                     phone.value = it
                                 },
